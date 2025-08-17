@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 1. MySQL Veritabanı Servisi
+  db:
+    image: mysql:8.0
+    container_name: hizmet-pinari-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'hizmet_pinari_db'
+      MYSQL_USER: 'app_user'
+      MYSQL_PASSWORD: 'app_password' # Lütfen bu şifreyi daha güvenli bir şeyle değiştirin
+      MYSQL_ROOT_PASSWORD: 'root_password' # Lütfen bu şifreyi daha güvenli bir şeyle değiştirin
+    ports:
+      # MySQL'e dışarıdan (örn: MySQL Workbench) erişmek isterseniz bu portu kullanabilirsiniz
+      - "3306:3306"
+    volumes:
+      # Veritabanı dosyalarını makinenizdeki ./database klasörüne bağlar
+      - ./database:/var/lib/mysql
+    networks:
+      - hizmet-pinari-network
+
+  # 2. phpMyAdmin Arayüz Servisi
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: hizmet-pinari-pma
+    restart: unless-stopped
+    ports:
+      # Tarayıcıdan http://localhost:8080 adresinden erişilecek
+      - "8080:80"
+    environment:
+      PMA_HOST: db # Docker içindeki 'db' isimli servise bağlan
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 'root_password' # Yukarıdaki root şifresi ile aynı olmalı
+    depends_on:
+      - db
+    networks:
+      - hizmet-pinari-network
+
+  # 3. .NET Backend Servisi
+  backend:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    container_name: hizmet-pinari-backend
+    restart: unless-stopped
+    working_dir: /app
+    ports:
+      # Postman'den http://localhost:5000 adresinden erişilecek
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      # .NET proje dosyalarını makinenizdeki ./backend klasörüne bağlar
+      - ./backend:/app
+    command: tail -f /dev/null # Konteynerin sürekli çalışmasını sağlar. Projeyi içinde manuel başlatacağız.
+    depends_on:
+      - db
+    networks:
+      - hizmet-pinari-network
+
+# Ağ Tanımı
+networks:
+  hizmet-pinari-network:
+    name: HizmetPinariAg
+    driver: bridge

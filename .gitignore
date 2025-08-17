@@ -1,0 +1,70 @@
+# ===================================================================
+# GITHUB'IN STANDART .NET CORE .GITIGNORE DOSYASI
+# Açıklama: Bu dosya, derleme çıktıları, kullanıcı ayarları ve 
+# diğer geçici dosyaların Git tarafından takip edilmesini engeller.
+# ===================================================================
+# Veritabanı dosyalarını yoksay
+database/
+
+
+# Kullanıcıya özel dosyalar
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build sonuçları
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio Code özel ayarları
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Rider ve diğer JetBrains IDE dosyaları
+.idea/
+*.sln.iml
+
+# Mac/Linux dosyaları
+.DS_Store
+Thumbs.db
+
+# NuGet paketleri
+*.nupkg
+*.nuget.props
+*.nuget.targets
+
+# Geçici dosyalar ve publish çıktıları
+*.local
+publish/
+Publish/
+*.vspscc
+*.vssscc
+.builds/
+*.pidb
+*.log
+*.sqlite
+
+# Sırların (secrets) tutulduğu dosyalar
+secrets.json
+appsettings.Development.json
+
+# Docker dosyaları (isteğe bağlı, genelde eklenir ama bazen istenmeyebilir)
+docker-compose.yml.override
+.dockerignore
