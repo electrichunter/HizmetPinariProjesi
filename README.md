@@ -1,64 +1,44 @@
-Proje Yol Haritası (Basitleştirilmiş Liste)
-Aşağıda, projemize eklenecek özellikler mantıksal bir sırayla listelenmiştir.
+# Pazar Yeri Projesi - Faz 1 (MVP) Görev Listesi
 
-Faz 1: Temel İşlevsellik (MVP)
-Bu fazın amacı, bir müşterinin hizmet alıp hizmet verenin bu işe teklif verebilmesini sağlamaktır.
+Bu belge, pazar yeri uygulamamızın ilk geliştirme fazı olan **MVP (Minimum Viable Product)** için tamamlanması gereken görevleri listelemektedir. Görevler tamamlandıkça yanlarındaki kutucuklar işaretlenerek projenin genel ilerlemesi takip edilebilir.
 
-1. Müşteri ve Hizmet Veren Kayıt Sistemi
+---
 
-Müşteri ve Hizmet Veren için ayrı kayıt ekranları.
+## Faz 1: Temel Pazar Yeri İşlevselliği (MVP)
 
-Hizmet verenler için detaylı profil sayfası (uzmanlık alanı, portfolyo vb.).
+### Müşteri Kayıt ve Profil Sistemi
 
-2. Hizmet Talebi Oluşturma
+- [ ] **Backend:** `CustomerController.cs` oluştur
+- [ ] **Backend:** Müşteri kayıt endpoint'i oluştur
+- [ ] **Frontend:** Müşteri kayıt ekranını tasarla
+- [ ] **Frontend:** Kayıt API entegrasyonunu yap
+- [ ] **Frontend:** Profil ekranını güncelle
 
-Müşterilerin kategori seçerek yeni iş ilanı oluşturabileceği bir form.
+### Hizmet Talebi Oluşturma (Müşteri)
 
-3. Açık İşleri Görüntüleme
+- [ ] **Backend:** `ServiceRequest.cs` modelini oluştur
+- [ ] **Backend:** `CreateRequestDto.cs` ve `RequestDetailsDto.cs` oluştur
+- [ ] **Backend:** `ServiceRequestController.cs` oluştur
+- [ ] **Backend:** Talep oluşturma endpoint'i ekle
+- [ ] **Backend:** "Taleplerim" endpoint'i ekle
+- [ ] **Frontend:** Menüye "Talep Oluştur" ve "Taleplerim" ekle
+- [ ] **Frontend:** `CreateRequestScreen.tsx` ekranını oluştur
+- [ ] **Frontend:** `MyRequestsScreen.tsx` ekranını oluştur
 
-Hizmet verenlerin, kendi alanlarına uygun açık iş ilanlarını listeleyebileceği bir ekran.
+### Açık İşleri Görüntüleme (Hizmet Veren)
 
-4. Teklif Verme
+- [ ] **Backend:** "Açık İşler" endpoint'i ekle
+- [ ] **Frontend:** `ProviderStack.tsx` menüsünü oluştur
+- [ ] **Frontend:** `AppNavigator.tsx` güncelle
+- [ ] **Frontend:** `OpenRequestsScreen.tsx` ekranını oluştur
 
-Hizmet verenlerin, bir iş ilanına fiyat ve açıklama ile teklif sunabilmesi.
+### Teklif Verme ve Değerlendirme
 
-5. Teklifleri Değerlendirme
-
-Müşterilerin, ilanlarına gelen teklifleri görüp birini seçebilmesi.
-
-Faz 2: Güven ve Süreç Yönetimi
-Bu faz, iş kabul edildikten sonraki süreci yönetir.
-
-6. Puanlama ve Yorum Sistemi
-
-İş bittikten sonra tarafların birbirine puan verip yorum yapabilmesi.
-
-Yorumların hizmet veren profilinde gösterilmesi.
-
-7. İş Durumu Güncelleme
-
-İşin durumunu (Başladı, Tamamlandı vb.) tarafların güncelleyebilmesi.
-
-Faz 3: Gelişmiş Özellikler
-Bu faz, platformu daha kullanışlı ve yönetilebilir hale getirir.
-
-8. Admin Paneli Geliştirmeleri
-
-Kullanıcıları, ilanları ve teklifleri yönetme ekranları.
-
-Anlaşmazlıklar için "Destek Talebi" sistemi.
-
-9. Bildirim Sistemi
-
-Yeni teklif, yeni mesaj gibi durumlarda kullanıcılara anlık bildirim gönderilmesi.
-
-10. Uygulama İçi Mesajlaşma
-
-Müşteri ve hizmet veren arasında özel sohbet ekranı.
-
-Gelecek Planları (İsteğe Bağlı)
-Güvenli Ödeme Sistemi Entegrasyonu
-
-Gelişmiş Arama ve Filtreleme
-
-Harita Üzerinde Konum Gösterme
+- [ ] **Backend:** `Offer.cs` modeli ve DTO'ları oluştur
+- [ ] **Backend:** `OfferController.cs` oluştur
+- [ ] **Backend:** Teklif verme endpoint'i oluştur
+- [ ] **Backend:** Teklifleri listeleme endpoint'i oluştur
+- [ ] **Backend:** Teklif kabul etme endpoint'i oluştur
+- [ ] **Frontend:** `RequestDetailScreen.tsx` ekranını oluştur
+- [ ] **Frontend:** Teklif verme formunu oluştur
+- [ ] **Frontend:** `RequestOffersScreen.tsx` ekranını oluştur
