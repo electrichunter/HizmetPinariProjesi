@@ -8,11 +8,11 @@ Bu belge, pazar yeri uygulamamızın ilk geliştirme fazı olan **MVP (Minimum V
 
 ### Müşteri Kayıt ve Profil Sistemi
 
-- [ ] **Backend:** `CustomerController.cs` oluştur
-- [ ] **Backend:** Müşteri kayıt endpoint'i oluştur
-- [ ] **Frontend:** Müşteri kayıt ekranını tasarla
-- [ ] **Frontend:** Kayıt API entegrasyonunu yap
-- [ ] **Frontend:** Profil ekranını güncelle
+- [1] **Backend:** `CustomerController.cs` oluştur
+- [1] **Backend:** Müşteri kayıt endpoint'i oluştur
+- [] **Frontend:** Müşteri kayıt ekranını tasarla
+- [] **Frontend:** Kayıt API entegrasyonunu yap
+- [] **Frontend:** Profil ekranını güncelle
 
 ### Hizmet Talebi Oluşturma (Müşteri)
 
