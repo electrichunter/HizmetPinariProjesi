@@ -1,4 +1,5 @@
 using HizmetPinari.Api.Models;
+using HizmetPinari.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HizmetPinari.Api.Data;
@@ -11,7 +12,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     
-    
+    public DbSet<ProviderProfile> ProviderProfiles { get; set; }
+    public DbSet<ServiceRequest> ServiceRequests { get; set; }
     public DbSet<ServiceCategory> ServiceCategories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) 
