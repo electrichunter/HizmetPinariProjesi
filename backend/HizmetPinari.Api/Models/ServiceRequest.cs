@@ -25,9 +25,7 @@ namespace HizmetPinari.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long RequestID { get; set; }
 
-        /// <summary>
-        /// Talebi oluşturan müşterinin ID'si (Foreign Key). 'Users' tablosuna işaret eder.
-        /// </summary>
+    
         [Required]
         public long CustomerID { get; set; }
 
