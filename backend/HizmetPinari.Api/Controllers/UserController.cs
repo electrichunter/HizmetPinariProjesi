@@ -93,7 +93,7 @@ public class UserController : ControllerBase
     /// </summary>
     [HttpPut("me")]
     [Authorize] // Sadece giriş yapmış kullanıcılar erişebilir.
-    public async Task<IActionResult> UpdateMyProfile([FromBody] UpdateUserProfileDto dto)
+    public async Task<IActionResult> UpdateMyProfile([FromBody] UserDto dto)
     {
         var userId = GetCurrentUserId();
         if (userId == null)

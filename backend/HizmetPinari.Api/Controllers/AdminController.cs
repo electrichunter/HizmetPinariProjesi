@@ -1,23 +1,92 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 using HizmetPinari.Api.Data;
 using HizmetPinari.Api.Dtos;
 using HizmetPinari.Api.Models;
-namespace HizmetPinari.Api.Controllers;
-[ApiController, Route("api/[controller]")]
-public class AdminController : ControllerBase {
-    private readonly IConfiguration _config;
-    private readonly ApplicationDbContext _context;
-    public AdminController(IConfiguration config, ApplicationDbContext context) { _config = config; _context = context; }
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] AdminRegisterDto r) {
-        if (r.AdminKey != _config["RegistrationKeys:Admin"]) return Unauthorized(new { Message = "Geçersiz admin anahtarı." });
-        if (await _context.Users.AnyAsync(u => u.Email == r.Email)) return Conflict(new { Message = "Bu e-posta zaten kullanılıyor." });
-        var user = new User { Email = r.Email, PasswordHash = BCrypt.Net.BCrypt.HashPassword(r.Password), FirstName = r.FirstName, LastName = r.LastName };
-        var role = await _context.Roles.FirstOrDefaultAsync(x => x.RoleName == "Admin");
-        if (role == null) return StatusCode(500, new { Message = "Admin rolü bulunamadı." });
-        await _context.Users.AddAsync(user); await _context.SaveChangesAsync();
-        await _context.UserRoles.AddAsync(new UserRole { UserID = user.UserID, RoleID = role.RoleID }); await _context.SaveChangesAsync();
-        return Ok(new { Message = "Admin kullanıcısı başarıyla oluşturuldu." });
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace HizmetPinari.Api.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    //[Authorize(Roles = "Admin")] // Bu endpoint'lere sadece Admin rolündekiler erişebilir
+    public class AdminController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
+
+        public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        // --- Destek Personeli Yönetimi ---
+
+        [HttpGet("support")]
+        public async Task<IActionResult> GetSupportStaff()
+        {
+            var supportRoleId = await _context.Roles
+                .Where(r => r.RoleName == "Destek")
+                .Select(r => r.RoleID)
+                .FirstOrDefaultAsync();
+
+            if (supportRoleId == 0) return Ok(new List<UserDto>());
+
+            var supportUsers = await _context.UserRoles
+                .Where(ur => ur.RoleID == supportRoleId)
+                .Select(ur => new UserDto {
+                    UserId = ur.User.UserID,
+                    Email = ur.User.Email,
+                    FirstName = ur.User.FirstName,
+                    LastName = ur.User.LastName
+                })
+                .ToListAsync();
+
+            return Ok(supportUsers);
+        }
+        
+        [HttpPost("support")]
+        public async Task<IActionResult> CreateSupportUser(SupportUserCreateDto request)
+        {
+            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+            {
+                return BadRequest("Bu email adresi zaten kullanılıyor.");
+            }
+            
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            var supportRole = await _context.Roles.SingleOrDefaultAsync(r => r.RoleName == "Destek");
+            if (supportRole == null) return StatusCode(500, "Destek rolü bulunamadı.");
+
+            var user = new User
+            {
+                Email = request.Email,
+                PasswordHash = passwordHash,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            };
+            user.UserRoles.Add(new UserRole { Role = supportRole });
+
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return StatusCode(201, new { message = "Destek personeli başarıyla oluşturuldu."});
+        }
+
+        [HttpDelete("support/{id}")]
+        public async Task<IActionResult> DeleteSupportUser(long id)
+        {
+             var user = await _context.Users.FindAsync(id);
+             if (user == null)
+             {
+                 return NotFound("Kullanıcı bulunamadı.");
+             }
+            
+             _context.Users.Remove(user);
+             await _context.SaveChangesAsync();
+
+             return NoContent(); // Başarılı silme
+        }
     }
 }

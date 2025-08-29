@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HizmetPinari.Api.Data;
 using HizmetPinari.Dtos;
-using HizmetPinari.Models;
+using HizmetPinari.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +47,7 @@ namespace HizmetPinari.Api.Controllers // Namespace diğer controller'lar ile uy
                 var userId = GetCurrentUserId();
                 if (userId == null) return Unauthorized();
 
+#pragma warning disable CS8601 // Possible null reference assignment.
                 var serviceRequest = new ServiceRequest
                 {
                     CustomerID = userId.Value,
@@ -55,6 +56,7 @@ namespace HizmetPinari.Api.Controllers // Namespace diğer controller'lar ile uy
                     Description = createRequestDto.Description,
                     Location = createRequestDto.Location
                 };
+#pragma warning restore CS8601 // Possible null reference assignment.
 
                 await _context.ServiceRequests.AddAsync(serviceRequest);
                 await _context.SaveChangesAsync();
