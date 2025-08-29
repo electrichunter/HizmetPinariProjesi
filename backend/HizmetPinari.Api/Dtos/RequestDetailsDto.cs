@@ -14,13 +14,13 @@ namespace HizmetPinari.Dtos
     {
         public long RequestID { get; set; }
         public long CustomerID { get; set; }
-        public string CustomerFullName { get; set; } // Geliştirme: Müşteri adını ve soyadını birleştirerek sunar.
+        public string CustomerFullName { get; set; } = string.Empty;// Geliştirme: Müşteri adını ve soyadını birleştirerek sunar.
         public int CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Location { get; set; }
-        public string Status { get; set; }
+        public string CategoryName { get; set; }= string.Empty;
+        public string Title { get; set; }= string.Empty;
+        public string Description { get; set; }= string.Empty;
+        public string Location { get; set; }= string.Empty;
+        public string Status { get; set; }= string.Empty;
         public int OfferCount { get; set; } // Geliştirme: Talebe gelen toplam teklif sayısını gösterir.
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

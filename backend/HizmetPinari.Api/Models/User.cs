@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HizmetPinari.Api.Models;
 [Table("Users")]
 public class User {
-    internal ProviderProfile ProviderProfil;
+    internal ProviderProfile? ProviderProfil;
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] public long UserID { get; set; }
     [Required, EmailAddress, StringLength(255)] public string Email { get; set; } = string.Empty;
@@ -11,4 +11,6 @@ public class User {
     [Required, StringLength(100)] public string FirstName { get; set; } = string.Empty;
     [Required, StringLength(100)] public string LastName { get; set; } = string.Empty;
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public string? PhoneNumber { get; set; } 
+    public string? ProfilePictureURL { get; internal set; }
 }
